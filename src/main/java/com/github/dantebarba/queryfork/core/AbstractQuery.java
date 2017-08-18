@@ -1,60 +1,85 @@
 package com.github.dantebarba.queryfork.core;
 
-public abstract class AbstractQuery<T> implements QueryPhase,
-		AbstractBuilder<T> {
+public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectPhase, HasParameter, AbstractBuilder<T> {
 
-	private StringBuilder where = new StringBuilder().append(" where 1=1");
-	Parameter<String, Object> parameters = new BuiltInParameter();
+	Parameter parameters = new BuiltInParameter();
+
 	HQLString query = new HQLString();
 
 	@Override
 	public HQLString getQuery() {
-		return null;
+		return query;
+	}
+
+	public AbstractQuery<T> count() {
+		this.count("*");
+		return this;
+	}
+	
+	public AbstractQuery<T> select(String select) {
+		this.getQuery().select(select);
+		return this;
+	}
+	
+	public AbstractQuery<T> from(String...from) {
+		this.getQuery().from(from);
+		return this;
+	}
+
+	public AbstractQuery<T> count(String count) {
+		this.getQuery().count(count);
+		return this;
 	}
 
 	@Override
-	public AbstractQuery<T> where(AbstractQuery<QueryPhase> subQuery) {
+	public AbstractQuery<T> where(WherePhase subQuery) {
 		this.mergeParameters(subQuery);
-		this.where.replace(0, this.where.length(),
-				" where " + subQuery.getQuery());
+		this.getQuery().where(subQuery.getQuery().getHql());
+		return this;
+	}
+
+	/**
+	 * Non-Optional where helper, to pass Strings.
+	 */
+	public AbstractQuery<T> where(String subQuery) {
+		this.where(new SubQuery(subQuery).build());
 		return this;
 	}
 
 	@Override
 	public AbstractQuery<T> and(String subQuery) {
-		this.where.append(" and " + subQuery);
+		this.getQuery().and(subQuery);
 		return this;
 	}
 
 	@Override
 	public AbstractQuery<T> or(String subQuery) {
-		this.where.append(" or " + subQuery);
+		this.getQuery().or(subQuery);
 		return this;
 	}
 
 	@Override
 	public AbstractQuery<T> in(String parameter, Object inList) {
-		this.where.append(" in ");
+		this.getQuery().in();
 		this.parameter(parameter, inList);
 		return this;
 	}
 
 	@Override
-	public AbstractQuery<T> and(AbstractQuery<QueryPhase> subQuery) {
-		subQuery.build();
+	public AbstractQuery<T> and(WherePhase subQuery) {
 		this.mergeParameters(subQuery);
-		return this.and(subQuery.getQuery().toString());
+		return this.and(subQuery.getQuery().getHql());
 	}
 
 	@Override
-	public AbstractQuery<T> or(AbstractQuery<QueryPhase> subQuery) {
+	public AbstractQuery<T> or(WherePhase subQuery) {
 		this.mergeParameters(subQuery);
-		return this.or(subQuery.getQuery().toString());
+		return this.or(subQuery.getQuery().getHql());
 	}
 
 	@Override
 	public AbstractQuery<T> parameter(String paramKey) {
-		this.where.append(":" + paramKey);
+		this.getQuery().parameter(paramKey);
 		this.parameters.setParameter(paramKey);
 		return this;
 	}
@@ -65,17 +90,23 @@ public abstract class AbstractQuery<T> implements QueryPhase,
 	}
 
 	@Override
-	public Parameter mergeParameters(AbstractQuery subQuery) {
+	public Parameter mergeParameters(HasParameter subQuery) {
 		for (Object key : subQuery.getParameters().iterate()) {
-			this.getParameters().setParameter(key,
-					subQuery.getParameters().getParameter(key));
+			this.getParameters().setParameter(key, subQuery.getParameters().getParameter(key));
 		}
 		return this.getParameters();
 	}
 
 	@Override
-	public AbstractQuery parameter(String paramKey, Object paramValue) {
+	public AbstractQuery<T> parameter(String paramKey, Object paramValue) {
+		this.parameter(paramKey);
 		this.parameters.setParameter(paramKey, paramValue);
+		return this;
+	}
+
+	public AbstractQuery<T> subQuery(WherePhase subQuery) {
+		this.mergeParameters(subQuery);
+		this.getQuery().subQuery(subQuery.getQuery().getHql());
 		return this;
 	}
 

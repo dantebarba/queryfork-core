@@ -1,27 +1,15 @@
 package com.github.dantebarba.queryfork.core;
 
+/**
+ * All queries on HQL can be reduced to a String representative
+ * form. This method ensures all QueryPhases are compatible with
+ * the HQL standard. At the moment, Criteria Query are not supported, and
+ * are out of the propose of this small library.
+ * @author dantebarba
+ *
+ */
 public interface QueryPhase {
 
 	HQLString getQuery();
-
-	Parameter getParameters();
-
-	Parameter mergeParameters(AbstractQuery subQuery);
-
-	AbstractQuery parameter(String paramKey, Object paramValue);
-
-	AbstractQuery parameter(String paramKey);
-
-	AbstractQuery or(AbstractQuery<QueryPhase> subQuery);
-
-	AbstractQuery and(AbstractQuery<QueryPhase> subQuery);
-
-	AbstractQuery in(String parameter, Object inList);
-
-	AbstractQuery or(String subQuery);
-
-	AbstractQuery and(String subQuery);
-
-	AbstractQuery where(AbstractQuery<QueryPhase> subQuery);
 
 }
