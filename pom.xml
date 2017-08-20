@@ -24,7 +24,7 @@
 <scm>
   <connection>scm:git:https://github.com/dantebarba/queryfork-core.git</connection>
   <developerConnection>scm:git:ssh://github.com/dantebarba/queryfork-core.git</developerConnection>
-  <url>https://github.com/dantebarba/queryfork-core/tree/master/</url>
+  <url>https://github.com/dantebarba/queryfork-core/edit/master/</url>
 </scm>
 
   <licenses>
