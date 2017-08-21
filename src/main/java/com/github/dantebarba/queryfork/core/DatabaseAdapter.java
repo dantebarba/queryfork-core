@@ -16,7 +16,7 @@ public interface DatabaseAdapter {
 	
 	List getResultList();
 	
-	List getSingleResult();
+	Object getSingleResult();
 	
 	int count();
 	

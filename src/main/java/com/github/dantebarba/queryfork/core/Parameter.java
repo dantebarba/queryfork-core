@@ -1,6 +1,6 @@
 package com.github.dantebarba.queryfork.core;
 
-public interface Parameter<K, V> {
+public interface Parameter<K extends Object, V extends Object> {
 
 	boolean setParameter(K key, V value);
 	

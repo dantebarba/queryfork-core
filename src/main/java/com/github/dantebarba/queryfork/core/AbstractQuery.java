@@ -5,7 +5,7 @@ public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectP
 	Parameter parameters = new BuiltInParameter();
 
 	HQLString query = new HQLString();
-
+	
 	@Override
 	public HQLString getQuery() {
 		return query;
@@ -15,13 +15,13 @@ public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectP
 		this.count("*");
 		return this;
 	}
-	
+
 	public AbstractQuery<T> select(String select) {
 		this.getQuery().select(select);
 		return this;
 	}
-	
-	public AbstractQuery<T> from(String...from) {
+
+	public AbstractQuery<T> from(String... from) {
 		this.getQuery().from(from);
 		return this;
 	}
@@ -85,12 +85,12 @@ public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectP
 	}
 
 	@Override
-	public Parameter getParameters() {
+	public Parameter<Object, Object> getParameters() {
 		return this.parameters;
 	}
 
 	@Override
-	public Parameter mergeParameters(HasParameter subQuery) {
+	public Parameter<Object, Object> mergeParameters(HasParameter subQuery) {
 		for (Object key : subQuery.getParameters().iterate()) {
 			this.getParameters().setParameter(key, subQuery.getParameters().getParameter(key));
 		}

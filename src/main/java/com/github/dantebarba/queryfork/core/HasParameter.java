@@ -16,7 +16,7 @@ public interface HasParameter {
 	 * @param paramValue
 	 * @return
 	 */
-	AbstractQuery parameter(String paramKey, Object paramValue);
+	AbstractQuery<?> parameter(String paramKey, Object paramValue);
 
 	/**
 	 * Sets a parameter to the query, with null value. 
@@ -25,5 +25,5 @@ public interface HasParameter {
 	 * @param paramKey
 	 * @return
 	 */
-	AbstractQuery parameter(String paramKey);
+	AbstractQuery<?> parameter(String paramKey);
 }

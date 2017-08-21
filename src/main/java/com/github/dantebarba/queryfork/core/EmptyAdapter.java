@@ -10,7 +10,7 @@ public class EmptyAdapter implements DatabaseAdapter {
 	}
 
 	@Override
-	public List getSingleResult() {
+	public Object getSingleResult() {
 		return null;
 	}
 

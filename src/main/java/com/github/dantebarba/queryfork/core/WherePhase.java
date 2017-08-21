@@ -10,18 +10,18 @@ package com.github.dantebarba.queryfork.core;
  */
 public interface WherePhase extends QueryPhase, HasParameter {
 
-	AbstractQuery or(WherePhase subQuery);
+	AbstractQuery<?> or(WherePhase subQuery);
 
-	AbstractQuery and(WherePhase subQuery);
+	AbstractQuery<?> and(WherePhase subQuery);
 
-	AbstractQuery in(String parameter, Object inList);
+	AbstractQuery<?> in(String parameter, Object inList);
 
-	AbstractQuery or(String subQuery);
+	AbstractQuery<?> or(String subQuery);
 
-	AbstractQuery and(String subQuery);
+	AbstractQuery<?> and(String subQuery);
 
-	AbstractQuery where(WherePhase subQuery);
+	AbstractQuery<?> where(WherePhase subQuery);
 	
-	AbstractQuery subQuery(WherePhase subQuery);
+	AbstractQuery<?> subQuery(WherePhase subQuery);
 	
 }
