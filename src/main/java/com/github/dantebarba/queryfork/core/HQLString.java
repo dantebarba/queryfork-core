@@ -48,8 +48,8 @@ public class HQLString {
 		this.query.append(" or " + subQuery);
 	}
 
-	public void in() {
-		this.query.append(" in ");
+	public void in(String string) {
+		this.query.append(" in ").append(string);
 	}
 
 	public void parameter(String paramKey) {

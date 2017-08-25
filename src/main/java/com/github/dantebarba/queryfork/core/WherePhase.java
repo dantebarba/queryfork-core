@@ -23,5 +23,7 @@ public interface WherePhase extends QueryPhase, HasParameter {
 	AbstractQuery<?> where(WherePhase subQuery);
 	
 	AbstractQuery<?> subQuery(WherePhase subQuery);
+
+	AbstractQuery<?> in(WherePhase subQuery);
 	
 }

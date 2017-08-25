@@ -60,8 +60,13 @@ public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectP
 
 	@Override
 	public AbstractQuery<T> in(String parameter, Object inList) {
-		this.getQuery().in();
-		this.parameter(parameter, inList);
+		this.in(new SubQuery("").parameter(parameter, inList).build());
+		return this;
+	}
+	
+	@Override
+	public AbstractQuery<T> in(WherePhase subQuery) {
+		this.getQuery().in(subQuery.getQuery().getHql());
 		return this;
 	}
 
