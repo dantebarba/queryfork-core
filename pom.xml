@@ -8,6 +8,7 @@
 	<packaging>jar</packaging>
 	<description>QueryFork: A simple query builder for HQL</description>
 	<url>https://github.com/dantebarba/queryfork-core</url>
+	<name>queryfork-core</name>
 
 	<developers>
 		<developer>
