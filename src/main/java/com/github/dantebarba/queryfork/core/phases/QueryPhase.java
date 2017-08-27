@@ -1,4 +1,7 @@
-package com.github.dantebarba.queryfork.core;
+package com.github.dantebarba.queryfork.core.phases;
+
+import com.github.dantebarba.queryfork.core.builders.Builder;
+import com.github.dantebarba.queryfork.core.queries.IsQueriable;
 
 /**
  * All queries on HQL can be reduced to a String representative
@@ -8,8 +11,6 @@ package com.github.dantebarba.queryfork.core;
  * @author dantebarba
  *
  */
-public interface QueryPhase {
-
-	HQLString getQuery();
+public interface QueryPhase<T> extends Builder<T>, HasPhase, HasParameter, IsQueriable {
 
 }

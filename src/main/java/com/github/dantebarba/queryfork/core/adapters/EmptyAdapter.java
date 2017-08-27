@@ -1,6 +1,10 @@
-package com.github.dantebarba.queryfork.core;
+package com.github.dantebarba.queryfork.core.adapters;
 
 import java.util.List;
+
+import com.github.dantebarba.queryfork.core.paginators.Paginator;
+import com.github.dantebarba.queryfork.core.phases.concrete.Parameter;
+import com.github.dantebarba.queryfork.core.queries.representation.HQLString;
 
 public class EmptyAdapter implements DatabaseAdapter {
 

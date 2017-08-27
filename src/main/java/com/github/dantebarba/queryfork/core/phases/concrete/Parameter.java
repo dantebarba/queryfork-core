@@ -1,4 +1,4 @@
-package com.github.dantebarba.queryfork.core;
+package com.github.dantebarba.queryfork.core.phases.concrete;
 
 public interface Parameter<K extends Object, V extends Object> {
 
@@ -11,5 +11,7 @@ public interface Parameter<K extends Object, V extends Object> {
 	boolean hasParameter(K key);
 	
 	Iterable<K> iterate();
+	
+	Parameter<K, V> merge(Parameter<Object, Object> parameter);
 	
 }

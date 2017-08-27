@@ -1,4 +1,4 @@
-package com.github.dantebarba.queryfork.core;
+package com.github.dantebarba.queryfork.core.paginators;
 
 public class BuiltInPaginator implements Paginator {
 

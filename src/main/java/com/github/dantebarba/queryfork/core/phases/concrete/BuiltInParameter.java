@@ -1,4 +1,4 @@
-package com.github.dantebarba.queryfork.core;
+package com.github.dantebarba.queryfork.core.phases.concrete;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +32,14 @@ public class BuiltInParameter implements Parameter<String, Object> {
 	@Override
 	public Iterable<String> iterate() {
 		return this.parameterMap.keySet();
+	}
+	
+	@Override
+	public Parameter merge(Parameter parameter) {
+		for (Object key : parameter.iterate()) {
+			this.setParameter((String) key, parameter.getParameter(key));
+		}
+		return this;
 	}
 
 }
