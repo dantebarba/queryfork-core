@@ -6,7 +6,7 @@ import com.github.dantebarba.queryfork.core.phases.IsQuery;
 import com.github.dantebarba.queryfork.core.phases.QueryPhase;
 import com.github.dantebarba.queryfork.core.phases.SelectPhase;
 import com.github.dantebarba.queryfork.core.phases.WherePhase;
-import com.github.dantebarba.queryfork.core.queries.Query;
+import com.github.dantebarba.queryfork.core.queries.AbstractQuery;
 import com.github.dantebarba.queryfork.core.queries.representation.HQLString;
 
 public class Where<T extends IsQuery> extends PhaseHelper<T> implements SelectPhase<T>, WherePhase<T> {
@@ -25,8 +25,9 @@ public class Where<T extends IsQuery> extends PhaseHelper<T> implements SelectPh
 	}
 
 	@Override
-	public Order<T> where(Query start) {
+	public Order<T> where(AbstractQuery start) {
 		this.privateQuery.where(start.getQuery().getHql());
+		this.mergeParameters(start);
 		return (Order<T>) nextPhase();
 	}
 

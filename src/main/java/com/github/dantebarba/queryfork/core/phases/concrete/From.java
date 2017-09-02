@@ -68,7 +68,7 @@ public class From<T extends IsQuery> extends PhaseHelper<T> implements SelectPha
 
 	@Override
 	public Parameter getParameters() {
-		return this.nextPhase().getParameters();
+		return this.previousPhase().getParameters();
 	}
 
 	@Override

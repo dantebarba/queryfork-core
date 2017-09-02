@@ -1,6 +1,6 @@
 package com.github.dantebarba.queryfork.core.phases;
 
-import com.github.dantebarba.queryfork.core.queries.Query;
+import com.github.dantebarba.queryfork.core.queries.AbstractQuery;
 
 /**
  * Where clause with all its subqueries and Operands. 
@@ -12,6 +12,6 @@ import com.github.dantebarba.queryfork.core.queries.Query;
  */
 public interface WherePhase<T> extends QueryPhase<T> {
 
-	 OrderingPhase<T> where(Query start);
+	 OrderingPhase<T> where(AbstractQuery start);
 	
 }

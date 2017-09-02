@@ -1,6 +1,6 @@
 package com.github.dantebarba.queryfork.core.phases.concrete;
 
-import com.github.dantebarba.queryfork.core.builders.AbstractQuery;
+import com.github.dantebarba.queryfork.core.builders.AbstractQueryBuilder;
 import com.github.dantebarba.queryfork.core.helpers.PhaseHelper;
 import com.github.dantebarba.queryfork.core.phases.HasParameter;
 import com.github.dantebarba.queryfork.core.phases.IsQuery;
@@ -11,9 +11,9 @@ public class Select<T extends IsQuery> extends PhaseHelper<T> implements SelectP
 
 	HQLString privateQuery = new HQLString();
 	private From<T> nextPhase = null;
-	private AbstractQuery<T> previousPhase = null;
+	private AbstractQueryBuilder<T> previousPhase = null;
 
-	public Select(AbstractQuery<T> abstractQuery) {
+	public Select(AbstractQueryBuilder<T> abstractQuery) {
 		this.previousPhase = abstractQuery;
 	}
 
@@ -41,7 +41,7 @@ public class Select<T extends IsQuery> extends PhaseHelper<T> implements SelectP
 	}
 	
 	@Override
-	public AbstractQuery<T> previousPhase() {
+	public AbstractQueryBuilder<T> previousPhase() {
 		return this.previousPhase;
 	}
 

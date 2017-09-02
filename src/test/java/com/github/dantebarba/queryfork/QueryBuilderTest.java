@@ -6,15 +6,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.dantebarba.queryfork.core.adapters.DatabaseAdapter;
-import com.github.dantebarba.queryfork.core.builders.AbstractQuery;
+import com.github.dantebarba.queryfork.core.adapters.HasAdapter;
+import com.github.dantebarba.queryfork.core.builders.AbstractQueryBuilder;
 import com.github.dantebarba.queryfork.core.builders.QueryBuilder;
 import com.github.dantebarba.queryfork.core.paginators.Paginator;
+import com.github.dantebarba.queryfork.core.phases.HasParameter;
 import com.github.dantebarba.queryfork.core.phases.IsQuery;
 import com.github.dantebarba.queryfork.core.phases.concrete.Order;
 import com.github.dantebarba.queryfork.core.phases.concrete.Parameter;
 import com.github.dantebarba.queryfork.core.phases.concrete.SubQuery;
 import com.github.dantebarba.queryfork.core.phases.concrete.Where;
-import com.github.dantebarba.queryfork.core.queries.Query;
+import com.github.dantebarba.queryfork.core.queries.AbstractQuery;
 import com.github.dantebarba.queryfork.core.queries.representation.HQLString;
 
 public class QueryBuilderTest {
@@ -84,36 +86,31 @@ public class QueryBuilderTest {
 
 	@Test
 	public void testIn() {
-		Order<IsQuery> builder = new QueryBuilder().select("customer").from("Customer customer")
+		IsQuery query = new QueryBuilder().select("customer").from("Customer customer")
 				.where(new SubQuery("customer.id = 1").and("customer.name = John").or("customer.salary > 500")
 						.and("customer.surname =").parameter("surname", "Snow").and("customer.department")
-						.in("department", Arrays.asList(1, 2, 3)).build());
-		System.out.print(builder.getQuery());
+						.in("department", Arrays.asList(1, 2, 3)).build()).build();
+		System.out.print(query.getQuery());
 	}
 
 	@Test
 	public void testAdapter() {
-		Query query = (Query) new QueryBuilder().select("c").from("Customer c").build();
+		AbstractQuery query = (AbstractQuery) new QueryBuilder().select("c").from("Customer c").build();
 		DatabaseAdapter adapter = query.getAdapter();
 	}
 
-	public class CustomQuery implements IsQuery {
-
-		private HQLString textualQuery = new HQLString();
-
-		@Override
-		public HQLString getQuery() {
-			return this.textualQuery;
-		}
-
-		@Override
-		public CustomQuery paginate(Paginator paginator) {
-			return null;
-		}
+	public class CustomQuery extends AbstractQuery {
 
 		@Override
 		public CustomQuery createQuery(HQLString query2) {
-			this.textualQuery = query2;
+			return this;
+		}
+
+		@Override
+		public HasAdapter queryParameters(HasParameter query) {
+			if (query.getParameters().hasParameter("testParam")) {
+				System.out.println("PARAMETER FONUD!");
+			}
 			return this;
 		}
 
@@ -123,22 +120,21 @@ public class QueryBuilderTest {
 		}
 
 		@Override
-		public CustomQuery parameters(Parameter params) {
-			if (params.getParameter("testParam") != null)
-				System.out.println("The TEST Param has been found!!!");
-			return this;
+		public AbstractQuery paginate(Paginator pages) {
+			return null;
 		}
+
 
 	}
 
-	public class CustomQueryBuilder extends AbstractQuery<CustomQuery> {
+	public class CustomQueryBuilder extends AbstractQueryBuilder<CustomQuery> {
 
 		CustomQuery instance = new CustomQuery();
 
 		@Override
 		public CustomQuery build() {
 			instance.createQuery(this.getQuery());
-			instance.parameters(this.getParameters());
+			instance.queryParameters(this);
 			return instance;
 		}
 
@@ -153,6 +149,7 @@ public class QueryBuilderTest {
 	public void testCustomAdapter() {
 		IsQuery query = new CustomQueryBuilder().select().from("Customer customer")
 				.where(new SubQuery("customer.age").eq().parameter("testParam", "test").build()).build();
+		System.out.print(query.getQuery());
 	}
 
 }

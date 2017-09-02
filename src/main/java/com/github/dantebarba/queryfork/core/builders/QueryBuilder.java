@@ -3,7 +3,7 @@ package com.github.dantebarba.queryfork.core.builders;
 import com.github.dantebarba.queryfork.core.phases.IsQuery;
 import com.github.dantebarba.queryfork.core.queries.Query;
 
-public class QueryBuilder extends AbstractQuery<IsQuery> {
+public class QueryBuilder extends AbstractQueryBuilder<IsQuery> {
 
 
 	private IsQuery buildedQuery = new Query();
@@ -15,7 +15,7 @@ public class QueryBuilder extends AbstractQuery<IsQuery> {
 	@Override
 	public IsQuery build() {
 		this.buildedQuery.createQuery(this.getQuery());
-		this.buildedQuery.parameters(this.getParameters());
+		this.buildedQuery.mergeParameters(this);
 		return this.buildedQuery;
 	}
 

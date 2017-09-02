@@ -11,7 +11,6 @@ public interface HasParameter {
 	 * @return
 	 */
 	Parameter mergeParameters(HasParameter subQuery);
-
-
+	
 		
 }

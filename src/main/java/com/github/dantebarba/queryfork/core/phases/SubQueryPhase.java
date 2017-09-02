@@ -2,15 +2,15 @@ package com.github.dantebarba.queryfork.core.phases;
 
 import java.util.List;
 
-import com.github.dantebarba.queryfork.core.queries.Query;
+import com.github.dantebarba.queryfork.core.queries.AbstractQuery;
 
 public interface SubQueryPhase<T> extends ParameterPhase<T> {
 	
-	SubQueryPhase<T> or(Query subQuery);
+	SubQueryPhase<T> or(AbstractQuery subQuery);
 
-	SubQueryPhase<T> and(Query subQuery);
+	SubQueryPhase<T> and(AbstractQuery subQuery);
 
-	SubQueryPhase<T> in(Query subQuery);
+	SubQueryPhase<T> in(AbstractQuery subQuery);
 
 	SubQueryPhase<T> or(String subQuery);
 

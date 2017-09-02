@@ -12,7 +12,7 @@ import com.github.dantebarba.queryfork.core.phases.concrete.Select;
 import com.github.dantebarba.queryfork.core.phases.concrete.Where;
 import com.github.dantebarba.queryfork.core.queries.representation.HQLString;
 
-public abstract class AbstractQuery<T extends IsQuery> implements SelectPhase<T> {
+public abstract class AbstractQueryBuilder<T extends IsQuery> implements SelectPhase<T> {
 
 	QueryPhase<T> nextPhase;
 
@@ -34,7 +34,7 @@ public abstract class AbstractQuery<T extends IsQuery> implements SelectPhase<T>
 
 	@Override
 	public From<T> select() {
-		return this.select("");
+		return this.select("*");
 	}
 
 	public Where<T> from(String... from) {

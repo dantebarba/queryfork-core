@@ -104,7 +104,7 @@ public class HQLString {
 
 	public void in(String hql) {
 		this.in();
-		this.query.append("("+hql+")");
+		this.query.append(hql);
 	}
 
 }
