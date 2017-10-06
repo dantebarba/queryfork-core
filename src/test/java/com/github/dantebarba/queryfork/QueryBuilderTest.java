@@ -8,6 +8,7 @@ import org.junit.Test;
 import com.github.dantebarba.queryfork.core.AbstractQuery;
 import com.github.dantebarba.queryfork.core.Builder;
 import com.github.dantebarba.queryfork.core.DatabaseAdapter;
+import com.github.dantebarba.queryfork.core.Order;
 import com.github.dantebarba.queryfork.core.QueryBuilder;
 import com.github.dantebarba.queryfork.core.SubQuery;
 
@@ -102,6 +103,16 @@ public class QueryBuilderTest {
 	public void testAdapter() {
 		QueryBuilder query = new Builder().select("c").from("Customer c").where("1=1").build();
 		DatabaseAdapter adapter = query.getAdapter();
+	}
+	
+	@Test
+	public void testOrder() {
+		AbstractQuery<QueryBuilder> builder = new Builder().select("customer").from(
+				"Customer customer").orderBy("customer.id");
+		System.out.print(builder.getQuery());
+		AbstractQuery<QueryBuilder> builder2 = new Builder().select("customer").from(
+				"Customer customer").orderBy("customer.id", Order.ASC);
+		System.out.print(builder2.getQuery());
 	}
 
 }

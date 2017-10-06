@@ -76,4 +76,8 @@ public class HQLString {
 		this.query.append(" from " + entities.toString());
 	}
 
+	public void orderBy(String field, Order order) {
+		this.query.append(" order by ").append(field).append(" "+order);
+	}
+
 }

@@ -1,11 +1,12 @@
 package com.github.dantebarba.queryfork.core;
 
-public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectPhase, HasParameter, AbstractBuilder<T> {
+public abstract class AbstractQuery<T>
+		implements WherePhase, OrderPhase, FromPhase, SelectPhase, HasParameter, AbstractBuilder<T> {
 
 	Parameter parameters = new BuiltInParameter();
 
 	HQLString query = new HQLString();
-	
+
 	@Override
 	public HQLString getQuery() {
 		return query;
@@ -63,7 +64,7 @@ public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectP
 		this.in(new SubQuery("").parameter(parameter, inList).build());
 		return this;
 	}
-	
+
 	@Override
 	public AbstractQuery<T> in(WherePhase subQuery) {
 		this.mergeParameters(subQuery);
@@ -114,6 +115,20 @@ public abstract class AbstractQuery<T> implements WherePhase, FromPhase, SelectP
 		this.mergeParameters(subQuery);
 		this.getQuery().subQuery(subQuery.getQuery().getHql());
 		return this;
+	}
+
+	@Override
+	public AbstractQuery<T> orderBy(String field, Order order) {
+		this.getQuery().orderBy(field, order);
+		return this;
+	}
+
+	/**
+	 * Orden descendiente por defecto {@link Order}
+	 */
+	@Override
+	public AbstractQuery<T> orderBy(String field) {
+		return this.orderBy(field, Order.DESC);
 	}
 
 	@Override
