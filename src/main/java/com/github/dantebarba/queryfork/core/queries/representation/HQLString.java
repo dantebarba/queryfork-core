@@ -58,8 +58,8 @@ public class HQLString {
 		this.query.append(" or " + subQuery);
 	}
 
-	public void in(String string) {
-		this.query.append(" in ").append(string);
+	public void in() {
+		this.query.append(" in ");
 	}
 
 	public void parameter(String paramKey) {
@@ -88,10 +88,6 @@ public class HQLString {
 		this.query.append(" from " + entities.toString());
 	}
 
-<<<<<<< HEAD:src/main/java/com/github/dantebarba/queryfork/core/HQLString.java
-	public void orderBy(String field, Order order) {
-		this.query.append(" order by ").append(field).append(" "+order);
-=======
 	public HQLString prepend(HQLString privateQuery) {
 		this.query.insert(0, privateQuery);
 		return this;
@@ -109,7 +105,6 @@ public class HQLString {
 	public void in(String hql) {
 		this.in();
 		this.query.append(hql);
->>>>>>> features:src/main/java/com/github/dantebarba/queryfork/core/queries/representation/HQLString.java
 	}
 
 }
