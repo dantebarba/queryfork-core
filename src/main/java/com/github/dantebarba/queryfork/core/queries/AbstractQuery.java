@@ -3,6 +3,7 @@ package com.github.dantebarba.queryfork.core.queries;
 import com.github.dantebarba.queryfork.core.adapters.DatabaseAdapter;
 import com.github.dantebarba.queryfork.core.adapters.EmptyAdapter;
 import com.github.dantebarba.queryfork.core.adapters.HasAdapter;
+import com.github.dantebarba.queryfork.core.helpers.AliasHelper;
 import com.github.dantebarba.queryfork.core.paginators.Paginator;
 import com.github.dantebarba.queryfork.core.phases.HasParameter;
 import com.github.dantebarba.queryfork.core.phases.IsQuery;
@@ -22,6 +23,8 @@ public abstract class AbstractQuery implements IsQuery {
 	DatabaseAdapter adapter = new EmptyAdapter();
 
 	Parameter params = new EmptyParameter();
+	
+	AliasHelper aliases = new AliasHelper();
 
 	HQLString query = new HQLString();
 

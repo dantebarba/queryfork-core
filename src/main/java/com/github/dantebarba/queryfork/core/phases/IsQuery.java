@@ -6,6 +6,6 @@ import com.github.dantebarba.queryfork.core.queries.IsQueriable;
 
 public interface IsQuery extends IsQueriable, HasPaginator, HasParameter, HasAdapter {
 
-
-
+	String getRootAlias();
+		
 }

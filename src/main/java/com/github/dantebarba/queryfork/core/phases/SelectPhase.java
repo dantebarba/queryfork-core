@@ -6,7 +6,9 @@ public interface SelectPhase<T> extends QueryPhase<T>, HasAggregation, Builder<T
 
 	FromPhase select(String select);
 	
-	FromPhase select();
+	FromPhase select(Class clazz);
+	
+	FromPhase distinct();
 	
 	
 }

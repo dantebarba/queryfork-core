@@ -1,6 +1,7 @@
 package com.github.dantebarba.queryfork.core.phases.concrete;
 
 import com.github.dantebarba.queryfork.core.helpers.PhaseHelper;
+import com.github.dantebarba.queryfork.core.phases.FromPhase;
 import com.github.dantebarba.queryfork.core.phases.HasParameter;
 import com.github.dantebarba.queryfork.core.phases.IsQuery;
 import com.github.dantebarba.queryfork.core.phases.QueryPhase;
@@ -12,13 +13,13 @@ import com.github.dantebarba.queryfork.core.queries.representation.HQLString;
 public class Where<T extends IsQuery> extends PhaseHelper<T> implements SelectPhase<T>, WherePhase<T> {
 
 	private HQLString privateQuery = new HQLString();
-	private From<T> previousPhase;
+	private Join<T> previousPhase;
 	private Order<T> nextPhase;
 
-	public Where(From<T> from) {
-		this.previousPhase = from;
+	public Where(Join<T> join) {
+		this.previousPhase = join;
 	}
-	
+
 	@Override
 	public HQLString getQuery() {
 		return this.previousPhase().getQuery();
@@ -38,7 +39,7 @@ public class Where<T extends IsQuery> extends PhaseHelper<T> implements SelectPh
 	}
 
 	@Override
-	public From<T> previousPhase() {
+	public Join<T> previousPhase() {
 		return this.previousPhase;
 	}
 
@@ -74,8 +75,13 @@ public class Where<T extends IsQuery> extends PhaseHelper<T> implements SelectPh
 	}
 
 	@Override
-	public From<T> select() {
-		return this.previousPhase().select();
+	public FromPhase<T> select(Class clazz) {
+		return this.previousPhase().select(clazz);
+	}
+
+	@Override
+	public FromPhase distinct() {
+		return this.previousPhase().distinct();
 	}
 
 }

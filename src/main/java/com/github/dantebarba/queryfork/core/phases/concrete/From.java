@@ -12,7 +12,7 @@ public class From<T extends IsQuery> extends PhaseHelper<T> implements SelectPha
 
 	private Select<T> previousPhase;
 	private HQLString privateQuery = new HQLString();
-	private Where<T> nextPhase;
+	private Join<T> nextPhase;
 
 	public From(Select<T> select) {
 		this.previousPhase = select;
@@ -29,9 +29,9 @@ public class From<T extends IsQuery> extends PhaseHelper<T> implements SelectPha
 	}
 
 	@Override
-	public Where<T> from(String... from) {
+	public Join<T> from(String... from) {
 		this.privateQuery.from(from);
-		return (Where<T>) nextPhase();
+		return (Join<T>) nextPhase();
 	}
 
 	@Override
@@ -51,18 +51,18 @@ public class From<T extends IsQuery> extends PhaseHelper<T> implements SelectPha
 	}
 
 	@Override
-	public From<T> select() {
-		return this.previousPhase.select();
+	public FromPhase<T> select(Class clazz) {
+		return this.previousPhase.select(clazz);
 	}
 
 	@Override
-	public Where<T> getNextPhase() {
+	public Join<T> getNextPhase() {
 		return this.nextPhase;
 	}
 
 	@Override
-	public Where<T> createNextPhase() {
-		this.nextPhase = new Where<T>(this);
+	public Join<T> createNextPhase() {
+		this.nextPhase = new Join<T>(this);
 		return this.getNextPhase();
 	}
 
@@ -74,6 +74,11 @@ public class From<T extends IsQuery> extends PhaseHelper<T> implements SelectPha
 	@Override
 	public Parameter mergeParameters(HasParameter subQuery) {
 		return this.nextPhase().mergeParameters(subQuery);
+	}
+
+	@Override
+	public FromPhase distinct() {
+		return this.previousPhase.distinct();
 	}
 
 }

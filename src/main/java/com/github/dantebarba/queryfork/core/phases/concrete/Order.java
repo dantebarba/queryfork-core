@@ -3,6 +3,7 @@ package com.github.dantebarba.queryfork.core.phases.concrete;
 import com.github.dantebarba.queryfork.core.exceptions.EndOfQueryException;
 import com.github.dantebarba.queryfork.core.helpers.OrderCriteria;
 import com.github.dantebarba.queryfork.core.helpers.PhaseHelper;
+import com.github.dantebarba.queryfork.core.phases.FromPhase;
 import com.github.dantebarba.queryfork.core.phases.HasParameter;
 import com.github.dantebarba.queryfork.core.phases.IsQuery;
 import com.github.dantebarba.queryfork.core.phases.OrderingPhase;
@@ -74,13 +75,18 @@ public class Order<T extends IsQuery> extends PhaseHelper<T> implements SelectPh
 	}
 
 	@Override
-	public From<T> select(String select) {
+	public FromPhase<T> select(String select) {
 		return this.previousPhase().select();
 	}
 
 	@Override
-	public From<T> select() {
-		return this.previousPhase().select();
+	public FromPhase<T> select(Class clazz) {
+		return this.previousPhase().select(clazz);
+	}
+
+	@Override
+	public FromPhase distinct() {
+		return this.previousPhase().distinct();
 	}
 
 }
