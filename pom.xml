@@ -4,7 +4,7 @@
 
 	<groupId>com.github.dantebarba</groupId>
 	<artifactId>queryfork</artifactId>
-	<version>1.0.3</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 	<description>QueryFork: A simple query builder for HQL</description>
 	<url>https://github.com/dantebarba/queryfork-core</url>
@@ -50,6 +50,13 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
